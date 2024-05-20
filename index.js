@@ -1,6 +1,10 @@
 const { exec } = require('child_process');
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
+
 const app = express()
+
+app.use(cors())
 
 function runningApp() {
     exec('open-bpjs.au3', (error, stdout, stderr) => {
