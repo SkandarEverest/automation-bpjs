@@ -12,4 +12,4 @@
 
 
 ; WinClose("Setting Koneksi", "")
-WinSetState("Setting Koneksi", "", @SW_HIDE)
+WinSetState("Aplikasi Verifikasi dan Registrasi Sidik Jari", "", @SW_HIDE)
