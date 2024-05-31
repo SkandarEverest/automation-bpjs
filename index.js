@@ -7,7 +7,7 @@ const app = express()
 app.use(cors())
 
 function runningApp() {
-    exec('open-bpjs.au3', (error, stdout, stderr) => {
+    exec('open-bpjs.exe', (error, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         if (error !== null) {
@@ -18,7 +18,7 @@ function runningApp() {
 
 
 function minimizeApp() {
-    exec('minimizie-bpjs.au3', (error, stdout, stderr) => {
+    exec('minimizie-bpjs.exe', (error, stdout, stderr) => {
         console.log(stdout);
         console.log(stderr);
         if (error !== null) {
