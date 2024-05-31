@@ -11,5 +11,6 @@
 ; Script Start - Add your code below here
 
 
-; WinClose("Setting Koneksi", "")
-WinSetState("[REGEXPCLASS:HwndWrapper.*]", "", @SW_HIDE)
+WinClose("[REGEXPCLASS:HwndWrapper.*]", "")
+WinClose("[REGEXPCLASS:HwndWrapper.*]", "")
+; WinSetState("[REGEXPCLASS:HwndWrapper.*]", "", @SW_HIDE)

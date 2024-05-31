@@ -14,9 +14,9 @@
 
 Run("C:\Program Files (x86)\BPJS Kesehatan\Aplikasi Sidik Jari BPJS Kesehatan\After.exe")
 WinWaitActive("[REGEXPCLASS:HwndWrapper.*]")
-Sleep(2000)
-Send("rendra.putra{+}") 
+Sleep(1000)
+Send("test", 0) 
 Send("{TAB}")
-Send("adsad+ASdas{+}")
+Send("test", 0)
 Send("{TAB}")
 Send("{ENTER}")
