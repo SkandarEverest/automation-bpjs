@@ -12,4 +12,4 @@
 
 
 ; WinClose("Setting Koneksi", "")
-WinSetState("Aplikasi Verifikasi dan Registrasi Sidik Jari", "", @SW_HIDE)
+WinSetState("[REGEXPCLASS:HwndWrapper.*]", "", @SW_HIDE)
