@@ -10,10 +10,10 @@
 
 ; Script Start - Add your code below here
 
-
-
 Run("C:\Program Files (x86)\BPJS Kesehatan\Aplikasi Sidik Jari BPJS Kesehatan\After.exe")
+WinSetState("[CLASS:Chrome_WidgetWin_1]", "", @SW_MINIMIZE)
 WinWaitActive("[REGEXPCLASS:HwndWrapper.*]")
+
 Sleep(1000)
 Send("test", 0) 
 Send("{TAB}")
