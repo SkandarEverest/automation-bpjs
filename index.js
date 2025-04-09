@@ -17,8 +17,11 @@ function runningApp() {
 }
 
 function runningFrista(username, password, nik) {
-    const scriptPath = "open-frista.au3";
-    const command = `AutoIt3.exe ${scriptPath} "${username}" "${password}" "${nik}"`;
+    const scriptPath = "open-frista.exe";
+    const command = `${scriptPath} "${username}" "${password}" "${nik}"`;
+    // for development
+    // const scriptPath = "open-frista.au3";
+    // const command = `AutoIt3.exe ${scriptPath} "${username}" "${password}" "${nik}"`;
 
     exec(command, (error, stdout, stderr) => {
         console.log(stdout);
