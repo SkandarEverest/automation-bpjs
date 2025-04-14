@@ -33,6 +33,23 @@ function runningFrista(username, password, nik) {
     });
 }
 
+function closeFrista() {
+    const scriptPath = "close-frista.exe";
+    const command = `${scriptPath}"`;
+    // for development
+    // const scriptPath = "close-frista.au3";
+    // const command = `AutoIt3.exe ${scriptPath}`;
+
+    exec(command, (error, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+        if (error !== null) {
+            console.log(`exec error: ${error}`);
+        }
+        console.log('finished closing frista')
+    });
+}
+
 
 function minimizeApp() {
     exec('minimizie-bpjs.au3', (error, stdout, stderr) => {
@@ -63,6 +80,12 @@ app.get('/open-frista', function (req, res) {
     }
     // Call your automation with query values
     runningFrista(username, password, nik);
+
+    res.send('Frista automation started');
+});
+
+app.get('/close-frista', function (req, res) {
+    closeFrista();
 
     res.send('Frista automation started');
 });
