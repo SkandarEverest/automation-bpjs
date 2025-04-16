@@ -12,14 +12,14 @@
 AutoItSetOption("WinTitleMatchMode", 3)
 
 If $CmdLine[0] < 3 Then
-    MsgBox(16, "Error", "Missing arguments. Usage: open-frista.au3 <username> <password> <NIK>")
+    MsgBox(16, "Error", "Missing arguments. Usage: open-frista.au3 <username> <password> <bpjsno>")
     Exit
 EndIf
 
 ; Get values from command line
 Local $username = $CmdLine[1]
 Local $password = $CmdLine[2]
-Local $nik      = $CmdLine[3]
+Local $bpjsno      = $CmdLine[3]
 
 ; === Config ===
 Global Const $LOGIN_TITLE = "[TITLE:Login Frista (Face Recognition BPJS Kesehatan); CLASS:TkTopLevel]"
@@ -46,7 +46,7 @@ Func HandleMainWindow()
     WinActivate($hMain)
     WinWaitActive($hMain)
 
-    Send($nik, 0)
+    Send($bpjsno, 0)
 EndFunc
 
 
