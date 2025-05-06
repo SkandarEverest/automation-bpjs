@@ -11,7 +11,7 @@
 ; Script Start - Add your code below here
 AutoItSetOption("WinTitleMatchMode", 3)
 
-If $CmdLine[0] < 2 Then
+If $CmdLine[0] < 3 Then
     MsgBox(16, "Error", "Missing arguments. Usage: open-frista.au3 <username> <password> <bpjsno>")
     Exit
 EndIf

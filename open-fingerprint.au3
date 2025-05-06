@@ -10,7 +10,7 @@
 
 ; Script Start - Add your code below here
 
-If $CmdLine[0] < 2 Then
+If $CmdLine[0] < 3 Then
     MsgBox(16, "Error", "Missing arguments. Usage: open-frista.au3 <username> <password> <bpjsno>")
     Exit
 EndIf
