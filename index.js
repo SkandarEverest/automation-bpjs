@@ -1,10 +1,24 @@
 const { exec } = require('child_process');
 const express = require('express');
 const cors = require('cors');
+const crypto = require('crypto');
+require('dotenv').config();
 
 const app = express()
 
+const port = process.env.PORT || 3000;
+const algorithm = 'aes-256-cbc';
+const key = Buffer.from(process.env.AES_KEY);
+const iv = Buffer.from(process.env.AES_IV);
+
 app.use(cors())
+
+function decrypt(encryptedHex) {
+    const decipher = crypto.createDecipheriv(algorithm, key, iv);
+    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
 
 function runningApp() {
     exec('open-bpjs.au3', (error, stdout, stderr) => {
@@ -17,11 +31,12 @@ function runningApp() {
 }
 
 function runningFrista(username, password, bpjsNo) {
+    const decryptedPass = decrypt(password)
     const scriptPath = "open-frista.exe";
-    const command = `${scriptPath} "${username}" "${password}" "${bpjsNo}"`;
+    const command = `${scriptPath} "${username}" "${decryptedPass}" "${bpjsNo}"`;
     // for development
     // const scriptPath = "open-frista.au3";
-    // const command = `AutoIt3.exe ${scriptPath} "${username}" "${password}" "${bpjsNo}"`;
+    // const command = `AutoIt3.exe ${scriptPath} "${username}" "${decryptedPass}" "${bpjsNo}"`;
 
     exec(command, (error, stdout, stderr) => {
         console.log(stdout);
@@ -51,11 +66,12 @@ function closeFrista() {
 }
 
 function runningFinger(username, password, bpjsNo) {
+    const decryptedPass = decrypt(password)
     const scriptPath = "open-fingerprint.exe";
-    const command = `${scriptPath} "${username}" "${password}" "${bpjsNo}"`;
+    const command = `${scriptPath} "${username}" "${decryptedPass}" "${bpjsNo}"`;
     // for development
     // const scriptPath = "open-fingerprint.au3";
-    // const command = `AutoIt3.exe ${scriptPath} "${username}" "${password}" "${bpjsNo}"`;
+    // const command = `AutoIt3.exe ${scriptPath} "${username}" "${decryptedPass}" "${bpjsNo}"`;
 
     exec(command, (error, stdout, stderr) => {
         console.log(stdout);
@@ -143,5 +159,5 @@ app.get('/close-finger', function (req, res) {
     res.send('Fingerprint automation started');
 });
 
-app.listen(3000)
-console.log('listening to port 3000')
+app.listen(port)
+console.log(`listening to port ${port}`)
