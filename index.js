@@ -125,8 +125,8 @@ app.get('/open-frista', function (req, res) {
     const { username, password, bpjsNo } = req.query;
 
     // Check if any field is missing
-    if (!username || !password || !bpjsNo) {
-        return res.status(400).send('Missing username, password, or Bpjs Number');
+    if (!username || !password) {
+        return res.status(400).send('Missing username or password');
     }
     // Call your automation with query values
     runningFrista(username, password, bpjsNo);
@@ -144,8 +144,8 @@ app.get('/open-finger', function (req, res) {
     const { username, password, bpjsNo } = req.query;
 
     // Check if any field is missing
-    if (!username || !password || !bpjsNo) {
-        return res.status(400).send('Missing username, password, or Bpjs Number');
+    if (!username || !password) {
+        return res.status(400).send('Missing username or password');
     }
     // Call your automation with query values
     runningFinger(username, password, bpjsNo);
