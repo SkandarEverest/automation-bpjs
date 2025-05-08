@@ -1,24 +1,14 @@
 const { exec } = require('child_process');
 const express = require('express');
 const cors = require('cors');
-const crypto = require('crypto');
+const { decrypt } = require('./aesGcmUtil');
 require('dotenv').config();
 
 const app = express()
 
 const port = process.env.PORT || 3000;
-const algorithm = 'aes-256-cbc';
-const key = Buffer.from(process.env.AES_KEY);
-const iv = Buffer.from(process.env.AES_IV);
 
 app.use(cors())
-
-function decrypt(encryptedHex) {
-    const decipher = crypto.createDecipheriv(algorithm, key, iv);
-    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return decrypted;
-}
 
 function runningApp() {
     exec('open-bpjs.au3', (error, stdout, stderr) => {
