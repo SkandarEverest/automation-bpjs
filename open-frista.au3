@@ -30,12 +30,16 @@ Global Const $FRISTA_PATH = "C:\Program Files (x86)\BPJS Kesehatan\frista.v.3.0.
 ; === Functions ===
 
 Func PerformLogin()
+    Local $aPos = WinGetPos($LOGIN_TITLE) ; [X, Y, Width, Height]
+    Local $clickX = $aPos[0] + 400
+    Local $clickY = $aPos[1] + 400
+
     Sleep(1000)
     Send($username, 0) 
     Send("{TAB}")
     Send($password)
     Send("{TAB}")
-    MouseClick("left", 645, 510)
+    MouseClick("left", $clickX, $clickY)
     Sleep(1000)
 EndFunc
 
