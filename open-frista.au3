@@ -29,15 +29,27 @@ Global Const $FRISTA_PATH = "C:\Program Files (x86)\BPJS Kesehatan\frista.v.3.0.
 
 ; === Functions ===
 
+Func SafeSend($text)
+    $text = StringReplace($text, "{", "{" & "{")
+    $text = StringReplace($text, "}", "}" & "}")
+    $text = StringReplace($text, "[", "{[}")
+    $text = StringReplace($text, "]", "{]}")
+    $text = StringReplace($text, "#", "{#}")
+    $text = StringReplace($text, "!", "{!}")
+    $text = StringReplace($text, "+", "{+}")
+    $text = StringReplace($text, "^", "{^}")
+    Send($text, 0)
+EndFunc
+
 Func PerformLogin()
     Local $aPos = WinGetPos($LOGIN_TITLE) ; [X, Y, Width, Height]
     Local $clickX = $aPos[0] + 400
     Local $clickY = $aPos[1] + 400
 
     Sleep(1000)
-    Send($username, 0) 
+    SafeSend($username) 
     Send("{TAB}")
-    Send($password)
+    SafeSend($password)
     Send("{TAB}")
     MouseClick("left", $clickX, $clickY)
     Sleep(1000)

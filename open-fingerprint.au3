@@ -20,13 +20,25 @@ Local $username = $CmdLine[1]
 Local $password = $CmdLine[2]
 Local $bpjsno   = $CmdLine[3]
 
+Func SafeSend($text)
+    $text = StringReplace($text, "{", "{" & "{")
+    $text = StringReplace($text, "}", "}" & "}")
+    $text = StringReplace($text, "[", "{[}")
+    $text = StringReplace($text, "]", "{]}")
+    $text = StringReplace($text, "#", "{#}")
+    $text = StringReplace($text, "!", "{!}")
+    $text = StringReplace($text, "+", "{+}")
+    $text = StringReplace($text, "^", "{^}")
+    Send($text, 0)
+EndFunc
+
 Run("C:\Program Files (x86)\BPJS Kesehatan\Aplikasi Sidik Jari BPJS Kesehatan\After.exe")
 WinWaitActive("[REGEXPCLASS:HwndWrapper.*]")
 
 Sleep(1000)
-Send($username, 0) 
+SafeSend($username) 
 Send("{TAB}")
-Send($password, 0)
+SafeSend($password)
 Send("{TAB}")
 Send("{ENTER}")
 
