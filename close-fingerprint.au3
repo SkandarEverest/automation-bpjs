@@ -11,7 +11,7 @@
 ; Script Start - Add your code below here
 AutoItSetOption("WinTitleMatchMode", 3)
 
-Global Const $TITLE = "[REGEXPCLASS:HwndWrapper.*]"
+Global Const $FINGERPRINT_TITLE = "[REGEXPCLASS:HwndWrapper\[After\.exe;;.*\]]"
 
 Func CloseWindow($title)
     If WinExists($title) Then
@@ -24,4 +24,13 @@ Func CloseWindow($title)
     EndIf
 EndFunc
 
-CloseWindow($TITLE)
+Func KillHangingAutomation()
+    If ProcessExists("open-fingerprint.exe") Then
+        ProcessClose("open-fingerprint.exe")
+    EndIf
+EndFunc
+
+CloseWindow($FINGERPRINT_TITLE)
+KillHangingAutomation()
+
+Exit

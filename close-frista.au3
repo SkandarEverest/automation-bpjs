@@ -25,5 +25,16 @@ Func CloseWindow($title)
     EndIf
 EndFunc
 
+Func KillHangingAutomation()
+    If ProcessExists("open-frista.exe") Then
+        ProcessClose("open-frista.exe")
+    EndIf
+EndFunc
+
 CloseWindow($LOGIN_TITLE)
 CloseWindow($MAIN_TITLE)
+
+KillHangingAutomation()
+
+Exit
+
