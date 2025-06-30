@@ -4,30 +4,29 @@
  Author:         myName
 
  Script Function:
-	Template AutoIt script.
+	Automates login and BPJS number input to Frista.
 
 #ce ----------------------------------------------------------------------------
 
-; Script Start - Add your code below here
 AutoItSetOption("WinTitleMatchMode", 3)
 
+; === Validate arguments ===
 If $CmdLine[0] < 3 Then
     MsgBox(16, "Error", "Missing arguments. Usage: open-frista.au3 <username> <password> <bpjsno>")
     Exit
 EndIf
 
-; Get values from command line
+; === Command line arguments ===
 Local $username = $CmdLine[1]
 Local $password = $CmdLine[2]
-Local $bpjsno      = $CmdLine[3]
+Local $bpjsno   = $CmdLine[3]
 
-; === Config ===
+; === Constants ===
 Global Const $LOGIN_TITLE = "[TITLE:Login Frista (Face Recognition BPJS Kesehatan); CLASS:TkTopLevel]"
 Global Const $MAIN_TITLE  = "[TITLE:Frista (Face Recognition BPJS Kesehatan); CLASS:TkTopLevel]"
 Global Const $FRISTA_PATH = "C:\Program Files (x86)\BPJS Kesehatan\frista.v.3.0.1\frista.exe"
 
-
-; === Functions ===
+; === Helper Functions ===
 
 Func SafeSend($text)
     $text = StringReplace($text, "{", "{" & "{")
@@ -41,13 +40,22 @@ Func SafeSend($text)
     Send($text, 0)
 EndFunc
 
+Func FocusWindow($title)
+    Local $hWin = WinWait($title, "", 60)
+    WinSetState($hWin, "", @SW_SHOW)
+    WinSetOnTop($hWin, "", 1)
+    WinActivate($hWin)
+    WinWaitActive($hWin)
+    Return $hWin
+EndFunc
+
 Func PerformLogin()
     Local $aPos = WinGetPos($LOGIN_TITLE) ; [X, Y, Width, Height]
     Local $clickX = $aPos[0] + 400
     Local $clickY = $aPos[1] + 400
 
     Sleep(1000)
-    SafeSend($username) 
+    SafeSend($username)
     Send("{TAB}")
     SafeSend($password)
     Send("{TAB}")
@@ -56,34 +64,23 @@ Func PerformLogin()
 EndFunc
 
 Func HandleMainWindow()
-    Local $hMain = WinWait($MAIN_TITLE, "", 60)
-    WinSetState($hMain, "", @SW_SHOW)
-    WinSetOnTop($hMain, "", 1)
-    WinActivate($hMain)
-    WinWaitActive($hMain)
-
+    Local $hMain = FocusWindow($MAIN_TITLE)
     Send($bpjsno, 0)
 EndFunc
 
-
-; === Decision Logic ===
+; === Main Logic ===
 
 If WinExists($LOGIN_TITLE) Then
-    Local $hLogin = WinWait($LOGIN_TITLE, "", 60)
-    WinSetState($hLogin, "", @SW_SHOW)
-    WinSetOnTop($hLogin, "", 1)
-    WinActivate($hLogin)
-    WinWaitActive($hLogin)
+    FocusWindow($LOGIN_TITLE)
     PerformLogin()
     HandleMainWindow()
+
 ElseIf WinExists($MAIN_TITLE) Then
     HandleMainWindow()
+
 Else
     Run($FRISTA_PATH)
-    WinActivate($LOGIN_TITLE)
-    WinWaitActive($LOGIN_TITLE)
-	PerformLogin()
+    FocusWindow($LOGIN_TITLE)
+    PerformLogin()
     HandleMainWindow()
 EndIf
-
-
