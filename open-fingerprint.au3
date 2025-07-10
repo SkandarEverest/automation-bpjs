@@ -39,21 +39,44 @@ Func SafeSend($text)
     Send($text, 0)
 EndFunc
 
-Func FocusWindow($title)
-    Local $hWin = WinWait($title, "", 30)
-    WinSetState($hWin, "", @SW_SHOW)
-    WinSetOnTop($hWin, "", 1)
-    WinActivate($hWin)
-    WinWaitActive($hWin)
-    Return $hWin
-EndFunc
 
 ; === Main Logic ===
 
-Run($FINGERPRINT_PATH)
-FocusWindow($FINGERPRINT_TITLE)
+Local $exe = "C:\Program Files (x86)\BPJS Kesehatan\Aplikasi Sidik Jari BPJS Kesehatan\After.exe"
+
+Local $pid = Run($exe)
+
+Local $winTitle = ""
+
+Local $hWnd = ""
+
+
+; Wait up to 30 seconds for the window to appear
+For $i = 1 To 30
+	Local $winList = WinList()
+	For $j = 1 To $winList[0][0]
+        Local $hWnd = $winList[$j][1]
+		If WinGetProcess($hWnd) = $pid Then
+			$winTitle = $winList[$j][0]
+			ExitLoop 2
+		EndIf
+	Next
+	Sleep(1000)
+Next
+
+If $winTitle <> "" Then
+	WinWaitActive("Aplikasi Registrasi Sidik Jari")
+	ConsoleWrite("Operation Completed" & @CRLF)
+Else
+	ConsoleWrite("Timeout: No window found for PID: " & $pid & @CRLF)
+EndIf
+
+Local $aPos = WinGetPos($winTitle) ; [X, Y, Width, Height]
+Local $clickX = $aPos[0] + 235
+Local $clickY = $aPos[1] + 177
 
 Sleep(1000)
+MouseClick("left", $clickX, $clickY)
 SafeSend($username)
 Send("{TAB}")
 SafeSend($password)

@@ -25,9 +25,12 @@ Func CloseWindow($title)
 EndFunc
 
 Func KillHangingAutomation()
-    If ProcessExists("open-fingerprint.exe") Then
-        ProcessClose("open-fingerprint.exe")
-    EndIf
+    While True
+        Local $pid = ProcessExists("open-fingerprint.exe")
+        If $pid = 0 Then ExitLoop
+        ProcessClose($pid)
+        Sleep(200) ;
+    WEnd
 EndFunc
 
 CloseWindow($FINGERPRINT_TITLE)

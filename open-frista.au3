@@ -45,7 +45,6 @@ Func FocusWindow($title)
     WinSetState($hWin, "", @SW_SHOW)
     WinSetOnTop($hWin, "", 1)
     WinActivate($hWin)
-    WinWaitActive($hWin)
     Return $hWin
 EndFunc
 

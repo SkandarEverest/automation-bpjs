@@ -26,9 +26,12 @@ Func CloseWindow($title)
 EndFunc
 
 Func KillHangingAutomation()
-    If ProcessExists("open-frista.exe") Then
-        ProcessClose("open-frista.exe")
-    EndIf
+    While True
+        Local $pid = ProcessExists("open-frista.exe")
+        If $pid = 0 Then ExitLoop
+        ProcessClose($pid)
+        Sleep(200) ;
+    WEnd
 EndFunc
 
 CloseWindow($LOGIN_TITLE)
