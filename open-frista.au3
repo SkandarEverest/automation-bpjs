@@ -64,6 +64,10 @@ EndFunc
 
 Func HandleMainWindow()
     Local $hMain = FocusWindow($MAIN_TITLE)
+    Local $aPos = WinGetPos($MAIN_TITLE) ; [X, Y, Width, Height]
+    Local $clickX = $aPos[0] + 800
+    Local $clickY = $aPos[1] + 140
+    MouseClick("left", $clickX, $clickY)
     Send($bpjsno, 0)
 EndFunc
 
